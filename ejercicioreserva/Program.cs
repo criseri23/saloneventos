@@ -1,50 +1,50 @@
-﻿using System;
+
+using System;
 
 class Program
 {
     static void Main(string[] args)
     {
-        Console.WriteLine("Tipo dereserva");
-        Console.WriteLine("1 - Solo Evento");
-        Console.WriteLine("2 - Con Catering");
-        Console.WriteLine("3 - Full");
+        Console.WriteLine("===== SISTEMA DE RESERVAS =====");
+        Console.WriteLine();
 
-        int tipoReserva = Convert.ToInt32(Console.ReadLine());
+        Console.Write("Tipo de reserva (1: Solo Evento, 2: Con Catering, 3: Full): ");
+        int tipoReserva = int.Parse(Console.ReadLine());
 
         Console.Write("Nombre del cliente: ");
-        string nombreCliente = Console.ReadLine();
+        string nombre = Console.ReadLine();
 
         Console.Write("Cantidad de invitados: ");
-        int cantidadInvitados = Convert.ToInt32(Console.ReadLine());
+        int invitados = int.Parse(Console.ReadLine());
 
         Console.Write("Cantidad de horas: ");
-        int cantidadHoras = Convert.ToInt32(Console.ReadLine());
+        int horas = int.Parse(Console.ReadLine());
 
-        Console.Write("Incluye mozos (S/N): ");
+        Console.Write("¿Incluye mozos? (S/N): ");
         bool incluyeMozos = Console.ReadLine().ToUpper() == "S";
 
-        Console.Write("Dia (V/S/D): ");
-        char dia = Convert.ToChar(Console.ReadLine().ToUpper());
+        Console.Write("Día (V = Viernes, S = Sábado, D = Domingo): ");
+        char dia = char.Parse(Console.ReadLine().ToUpper());
 
         char tipoMenu = 'N';
         int cantidadAnimaciones = 0;
 
         if (tipoReserva == 2 || tipoReserva == 3)
         {
-            Console.Write("Menu (B/P): ");
-            tipoMenu = Convert.ToChar(Console.ReadLine().ToUpper());
+            Console.Write("Tipo de menú (B = Básico, P = Premium): ");
+            tipoMenu = char.Parse(Console.ReadLine().ToUpper());
         }
 
         if (tipoReserva == 3)
         {
             Console.Write("Cantidad de animaciones: ");
-            cantidadAnimaciones = Convert.ToInt32(Console.ReadLine());
+            cantidadAnimaciones = int.Parse(Console.ReadLine());
         }
 
-        Reserva reserva1 = new Reserva(
-            nombreCliente,
-            cantidadInvitados,
-            cantidadHoras,
+        Reserva reserva = new Reserva(
+            nombre,
+            invitados,
+            horas,
             incluyeMozos,
             dia,
             tipoReserva,
@@ -53,8 +53,11 @@ class Program
         );
 
         Console.WriteLine();
-        Console.WriteLine(reserva1.ObtenerResumen());
+        Console.WriteLine("===== RESUMEN DE LA RESERVA =====");
+        Console.WriteLine(reserva.ObtenerResumen());
 
-        Console.ReadLine();
+        Console.WriteLine();
+        Console.WriteLine("Presione una tecla para salir...");
+        Console.ReadKey();
     }
 }
