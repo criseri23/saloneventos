@@ -1,7 +1,15 @@
-﻿using System;
+using System;
 
 class Reserva
 {
+    // Constantes
+    private const int PRECIO_SALON = 6000;
+    private const int PRECIO_MOZO = 3000;
+    private const int CATERING_BASICO = 5000;
+    private const int CATERING_PREMIUM = 11000;
+    private const int PRECIO_ANIMACION = 18000;
+
+    // Atributos
     private string nombreCliente;
     private int cantidadInvitados;
     private int cantidadHoras;
@@ -11,26 +19,22 @@ class Reserva
     private char tipoMenu;
     private int cantidadAnimaciones;
 
-    public const int PrecioSalonHora = 6000;
-    public const int PrecioMozo = 3000;
-    public const int PrecioCateringBasico = 5000;
-    public const int PrecioCateringPremium = 11000;
-    public const int PrecioAnimacion = 18000;
-
+    // Constructor
     public Reserva(string nombreCliente, int cantidadInvitados, int cantidadHoras,
                    bool incluyeMozos, char dia, int tipoReserva,
                    char tipoMenu, int cantidadAnimaciones)
     {
-        NombreCliente = nombreCliente;
-        CantidadInvitados = cantidadInvitados;
-        CantidadHoras = cantidadHoras;
-        IncluyeMozos = incluyeMozos;
-        Dia = dia;
-        TipoReserva = tipoReserva;
-        TipoMenu = tipoMenu;
-        CantidadAnimaciones = cantidadAnimaciones;
+        this.nombreCliente = nombreCliente;
+        this.cantidadInvitados = cantidadInvitados;
+        this.cantidadHoras = cantidadHoras;
+        this.incluyeMozos = incluyeMozos;
+        this.dia = dia;
+        this.tipoReserva = tipoReserva;
+        this.tipoMenu = tipoMenu;
+        this.cantidadAnimaciones = cantidadAnimaciones;
     }
 
+    // Propiedades
     public string NombreCliente
     {
         get { return nombreCliente; }
@@ -79,50 +83,65 @@ class Reserva
         set { cantidadAnimaciones = value; }
     }
 
-    public decimal CalcularValor()
+    // Calcula el costo total
+    public int CalcularValor()
     {
-        decimal total = CantidadHoras * PrecioSalonHora;
+        int total = 0;
 
-        if (IncluyeMozos)
-        {
-            int cantidadMozos = (int)Math.Ceiling(CantidadInvitados / 15.0);
-            total += cantidadMozos * PrecioMozo;
-        }
+        // Salón
+        total = cantidadHoras * PRECIO_SALON;
 
-        if (Dia == 'S')
+        // Mozos
+        if (incluyeMozos)
         {
-            total += total * 0.80m;
-        }
-        else if (Dia == 'D')
-        {
-            total += total * 0.50m;
-        }
+            int mozos = cantidadInvitados / 15;
 
-        if (TipoReserva == 2 || TipoReserva == 3)
-        {
-            if (TipoMenu == 'B')
+            if (cantidadInvitados % 15 != 0)
             {
-                total += CantidadInvitados * PrecioCateringBasico;
+                mozos++;
             }
-            else if (TipoMenu == 'P')
+
+            total += mozos * PRECIO_MOZO;
+        }
+
+        // Recargo por día
+        if (dia == 'S')
+        {
+            total += (int)(total * 0.80);
+        }
+        else if (dia == 'D')
+        {
+            total += (int)(total * 0.50);
+        }
+
+        // Catering
+        if (tipoReserva == 2 || tipoReserva == 3)
+        {
+            if (tipoMenu == 'B')
             {
-                total += CantidadInvitados * PrecioCateringPremium;
+                total += cantidadInvitados * CATERING_BASICO;
+            }
+            else if (tipoMenu == 'P')
+            {
+                total += cantidadInvitados * CATERING_PREMIUM;
             }
         }
 
-        if (TipoReserva == 3)
+        // Animaciones
+        if (tipoReserva == 3)
         {
-            total += CantidadAnimaciones * PrecioAnimacion;
+            total += cantidadAnimaciones * PRECIO_ANIMACION;
         }
 
         return total;
     }
 
+    // Devuelve el resumen
     public string ObtenerResumen()
     {
-        return NombreCliente +
-               " - Inv: " + CantidadInvitados +
-               " - Horas: " + CantidadHoras +
+        return nombreCliente +
+               " - Inv: " + cantidadInvitados +
+               " - Horas: " + cantidadHoras +
                " - PRECIO $ " + CalcularValor();
     }
 }
