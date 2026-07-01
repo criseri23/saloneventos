@@ -2,14 +2,14 @@ using System;
 
 class Reserva
 {
-    // Constantes
+
     private const int PRECIO_SALON = 6000;
     private const int PRECIO_MOZO = 3000;
     private const int CATERING_BASICO = 5000;
     private const int CATERING_PREMIUM = 11000;
     private const int PRECIO_ANIMACION = 18000;
 
-    // Atributos
+
     private string nombreCliente;
     private int cantidadInvitados;
     private int cantidadHoras;
@@ -19,7 +19,7 @@ class Reserva
     private char tipoMenu;
     private int cantidadAnimaciones;
 
-    // Constructor
+    
     public Reserva(string nombreCliente, int cantidadInvitados, int cantidadHoras,
                    bool incluyeMozos, char dia, int tipoReserva,
                    char tipoMenu, int cantidadAnimaciones)
@@ -34,7 +34,7 @@ class Reserva
         this.cantidadAnimaciones = cantidadAnimaciones;
     }
 
-    // Propiedades
+
     public string NombreCliente
     {
         get { return nombreCliente; }
@@ -83,15 +83,13 @@ class Reserva
         set { cantidadAnimaciones = value; }
     }
 
-    // Calcula el costo total
     public int CalcularValor()
     {
         int total = 0;
 
-        // Salón
         total = cantidadHoras * PRECIO_SALON;
 
-        // Mozos
+   
         if (incluyeMozos)
         {
             int mozos = cantidadInvitados / 15;
